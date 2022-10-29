@@ -18,15 +18,17 @@ public class Ball : NetworkBehaviour
         base.OnStartServer();
 
         rigidbody2d.simulated = true;
-
+     
         gameController.GameStarted += OnGameStarted;
         gameController.ResetPosition += OnGameStarted;
+
+        SetDefaultPosition();
     }
 
     public override void OnStopServer()
     {
         base.OnStopServer();
-       
+
         gameController.GameStarted -= OnGameStarted;
         gameController.ResetPosition -= OnGameStarted;
     }
@@ -35,9 +37,12 @@ public class Ball : NetworkBehaviour
     [ServerCallback]
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.TryGetComponent<Bounds>(out var bounds))
+        if (col.transform.GetComponent<Bounds>())
         {
-            bounds.AddPoint(-col.transform.position.x);
+            if (-col.transform.position.x < 0)
+                gameController.AddPointToLeft();
+            else
+                gameController.AddPointToRight();
         }
 
     }
@@ -47,7 +52,7 @@ public class Ball : NetworkBehaviour
         SetDefaultPosition();
         SetRandomVelocity();
     }
-   
+
 
     private void SetDefaultPosition()
     {

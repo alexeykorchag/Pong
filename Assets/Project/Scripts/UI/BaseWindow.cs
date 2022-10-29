@@ -3,8 +3,6 @@ using UnityEngine;
 public class BaseWindow : MonoBehaviour
 {
     public bool IsOpen { get; protected set; }
-    public Canvas Canvas { get; protected set; }
-    public CanvasGroup CanvasGroup { get; protected set; }
 
     private void OnDestroy()
     {
@@ -13,10 +11,8 @@ public class BaseWindow : MonoBehaviour
 
     public virtual void Init()
     {
-        Canvas = this.GetComponent<Canvas>();
-        CanvasGroup = this.GetComponent<CanvasGroup>();
-    }
 
+    }
 
     public virtual void Destroy()
     {
@@ -34,5 +30,4 @@ public class BaseWindow : MonoBehaviour
         IsOpen = false;
         this.gameObject.SetActive(false);
     }
-
 }

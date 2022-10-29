@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BallSettings
   m_EditorClassIdentifier: 
   move:
-    speed: 5
+    speed: 25
   position:
     defaultPosition: {x: 0, y: 0}
     maxStartAngle: 45

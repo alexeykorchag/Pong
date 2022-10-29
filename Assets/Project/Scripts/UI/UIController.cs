@@ -75,7 +75,6 @@ public class UIController : MonoBehaviour
             window.Hide();
         }
 
-        // Открываю запрошенное окно
         targetWindow.Show();
 
         return targetWindow;

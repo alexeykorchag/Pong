@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 769816e406baad842838ad689b9bd115, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -98,7 +98,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 3385027013900076303}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 97a3e4cddb8635c4eba1265f44d106bf, type: 2}
+  m_Material: {fileID: 6200000, guid: 2ddbce15ab1db414aa6483b9e7eb4e91, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

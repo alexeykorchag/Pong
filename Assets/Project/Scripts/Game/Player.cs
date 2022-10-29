@@ -11,32 +11,41 @@ public class Player : NetworkBehaviour
     [SerializeField]
     private PlayerSettings _playerSettings;
 
-    private IMove _move;
+    private LocalPlayerMove _move;
 
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        gameController.ResetPosition += SetDefaultPosition;
+    }
+
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+
+        gameController.ResetPosition -= SetDefaultPosition;
+    }
 
     public override void OnStartClient()
     {
-        base.OnStartClient();
+        base.OnStartClient();     
 
+        _move = new LocalPlayerMove();
 
+        _move.Create(this.gameObject, _playerSettings.Move);
+        _move.Enable();
     }
 
     public override void OnStopClient()
     {
         base.OnStopClient();
 
+        gameController.ResetPosition -= SetDefaultPosition;
 
-    }
-
-
-
-
-
-    [Client]
-    private void Start()
-    {
-        _move = MoveFactory.CreateMove(this, _playerSettings);
-        _move.Enable();
+        _move.Disable();
+        _move.Dispose();
     }
 
     [Client]
@@ -45,11 +54,10 @@ public class Player : NetworkBehaviour
         _move.Update(Time.fixedDeltaTime);
     }
 
-    [Client]
-    private void OnDestroy()
+    [ClientRpc]
+    private void SetDefaultPosition()
     {
-        _move.Disable();
-        _move.Dispose();
+        _move.SetDefaultPosition();
     }
 
 }

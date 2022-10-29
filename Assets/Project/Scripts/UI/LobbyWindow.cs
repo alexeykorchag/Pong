@@ -36,7 +36,6 @@ public class LobbyWindow : BaseWindow
         buttonCreate.onClick.AddListener(ClickCreate);
         buttonConnect.onClick.AddListener(ClickConnect);
         buttonFind.onClick.AddListener(ClickFind);
-
  
         uriInput.onValueChanged.AddListener(CheckHostUri);
         uriInput.text = _networkManager.networkAddress;
@@ -61,7 +60,7 @@ public class LobbyWindow : BaseWindow
     {
         _networkAddress = text;
 
-        buttonConnect.interactable = !string.IsNullOrEmpty(_networkAddress); ;
+        buttonConnect.interactable = !string.IsNullOrEmpty(_networkAddress);
     }
 
 }

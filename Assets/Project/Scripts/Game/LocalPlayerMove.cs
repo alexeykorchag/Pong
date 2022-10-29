@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class LocalMove : IMove
+public class LocalPlayerMove
 {
     private static readonly Vector2 asix = Vector2.up;
 
@@ -12,6 +12,7 @@ public class LocalMove : IMove
     private PlayerSettings.MoveSettings _settings;
     private Rigidbody2D _rigidbody;
 
+    private Vector2 _defaultPosition;
 
     public void Create(GameObject root, PlayerSettings.MoveSettings settings)
     {
@@ -22,6 +23,8 @@ public class LocalMove : IMove
         _move = _controls.Game.Move;
 
         _rigidbody = _root.GetComponent<Rigidbody2D>();
+
+        _defaultPosition = _rigidbody.position;
     }
 
     public void Enable()
@@ -44,5 +47,10 @@ public class LocalMove : IMove
     public void Dispose()
     {
         _controls.Dispose();
+    }
+
+    public void SetDefaultPosition()
+    {
+        _rigidbody.position = _defaultPosition;
     }
 }

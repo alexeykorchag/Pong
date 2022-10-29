@@ -7,14 +7,7 @@ public class Bounds : NetworkBehaviour
     private GameController gameController;
 
 
-    [Server]
-    public void AddPoint(float direction)
-    {
-        if (direction < 0)
-            gameController.AddPointToLeft();
-        else
-            gameController.AddPointToRight();
-    }
+
 
 
 }
