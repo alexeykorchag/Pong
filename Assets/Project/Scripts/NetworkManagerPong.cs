@@ -1,8 +1,12 @@
 using Mirror;
 using UnityEngine;
+using Zenject;
 
 public class NetworkManagerPong : NetworkManager
 {
+    [Inject]
+    private UIController uiController;
+
     [SerializeField]
     private Transform leftRacketSpawn;
 
@@ -16,6 +20,12 @@ public class NetworkManagerPong : NetworkManager
         TryToSpawnPlayer(conn);
         TryToSpawnBall(conn);
     }
+    public override void OnClientConnect()
+    {
+        base.OnClientConnect();
+
+        uiController.OpenWindow<GameWindow>();
+    }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
@@ -25,6 +35,12 @@ public class NetworkManagerPong : NetworkManager
 
         // call base functionality (actually destroys the player)
         base.OnServerDisconnect(conn);
+    }
+
+    public override void OnServerReady(NetworkConnectionToClient conn)
+    {
+        Debug.Log($"NetworkRoomManager OnServerReady {conn}");
+        base.OnServerReady(conn);
     }
 
     private bool TryToSpawnPlayer(NetworkConnectionToClient conn)
