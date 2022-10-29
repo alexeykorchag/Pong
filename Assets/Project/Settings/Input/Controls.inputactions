@@ -18,7 +18,7 @@
             "bindings": [
                 {
                     "name": "1D Axis",
-                    "id": "86818061-bba1-478d-8f74-7209edaf409f",
+                    "id": "aedc9947-3892-4c8c-b043-612c4a3e0d88",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -29,7 +29,7 @@
                 },
                 {
                     "name": "negative",
-                    "id": "98932736-c561-484f-8b7a-3f987c060f01",
+                    "id": "e50d3a58-686d-46ad-8d61-876dbafe26c1",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -40,7 +40,7 @@
                 },
                 {
                     "name": "positive",
-                    "id": "49590992-bc95-4aaf-a55e-139b6563b930",
+                    "id": "d4f7cb08-da75-465d-9cd3-17166e004233",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -51,7 +51,7 @@
                 },
                 {
                     "name": "1D Axis",
-                    "id": "b7f33470-7123-4f5e-a0a1-ad28ca60b0f1",
+                    "id": "b6148b9f-05ef-4fbb-b69a-f71a2aedf271",
                     "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
@@ -62,8 +62,8 @@
                 },
                 {
                     "name": "negative",
-                    "id": "ee4ebb80-fb33-4fbf-84ca-2fa360cc0ee7",
-                    "path": "<Keyboard>/upArrow",
+                    "id": "fa572573-6a18-4e7e-91bf-0498b342a2ab",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -73,8 +73,8 @@
                 },
                 {
                     "name": "positive",
-                    "id": "8515f87a-3604-4c82-8251-42ef774c91eb",
-                    "path": "<Keyboard>/downArrow",
+                    "id": "e7d2bff9-8265-4da8-92fb-f8d3472f5411",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
