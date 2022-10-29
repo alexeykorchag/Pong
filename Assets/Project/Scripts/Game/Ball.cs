@@ -14,32 +14,46 @@ public class Ball : NetworkBehaviour
         base.OnStartServer();
 
         rigidbody2d.simulated = true;
-        rigidbody2d.velocity = Vector2.right * settings.Move.Speed;
+
+        SetDefaultPosition();
+        SetRandomVelocity();
     }
 
     [ServerCallback]
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.transform.GetComponent<Player>())
-        {
-            var y = HitFactor(transform.position,
-                                col.transform.position,
-                                col.collider.bounds.size.y);
-
-            var x = col.relativeVelocity.x > 0 ? 1 : -1;
-            var dir = new Vector2(x, y).normalized;
-            rigidbody2d.velocity = dir * settings.Move.Speed;
-        }
-
         if (col.transform.TryGetComponent<Bounds>(out var bounds))
         {
             bounds.AddPoint(-col.transform.position.x);
+            SetDefaultPosition();
+            SetRandomVelocity();
         }
 
     }
 
-    private static float HitFactor(Vector2 ballPos, Vector2 racketPos, float racketHeight)
+    private void SetDefaultPosition()
     {
-        return (ballPos.y - racketPos.y) / racketHeight;
+        rigidbody2d.position = settings.Position.DefaultPosition;
+    }
+
+    private void SetRandomVelocity()
+    {
+        rigidbody2d.velocity = GetRandomDirection() * settings.Move.Speed;
+    }
+
+    private Vector2 GetRandomDirection()
+    {
+        var angle = Random.Range(-settings.Position.MaxStartAngle, settings.Position.MaxStartAngle);
+        var sign = Mathf.Sign(Random.Range(-1, 1));
+        var direction = (sign * Vector2.right).Rotate(angle);
+        return direction;
+    }
+
+    private static Vector2 Rotate(Vector2 v, float delta)
+    {
+        return new Vector2(
+            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
+            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
+        );
     }
 }
