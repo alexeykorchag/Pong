@@ -519,10 +519,12 @@ MonoBehaviour:
   maxConnections: 4
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 8461414120788473335, guid: d07f01d06c3450046b3a45f082435cf5, type: 3}
+  viewerPrefab: {fileID: 8461414120788473335, guid: ffdc5ece7a2203746a9afe98da37a441, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 3385027013900076303, guid: 62bbb0d3cd925da47b1a312418687ed0, type: 3}
+  - {fileID: 8461414120788473335, guid: ffdc5ece7a2203746a9afe98da37a441, type: 3}
   leftRacketSpawn: {fileID: 2137493392}
   rightRacketSpawn: {fileID: 160804036}
 --- !u!4 &746504024

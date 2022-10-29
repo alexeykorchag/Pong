@@ -48,14 +48,21 @@ public class NetworkManagerPong : NetworkManager
 
     private bool TryToSpawnPlayer(NetworkConnectionToClient conn)
     {
-        if (numPlayers >= 2) return false;
+        if (numPlayers < 2)
+        {
+            // add player at correct spawn position
+            var start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
+            var player = Instantiate(playerPrefab, start.position, start.rotation);
+            container.Inject(player.GetComponent<Player>());
 
-        // add player at correct spawn position
-        var start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
-        var player = Instantiate(playerPrefab, start.position, start.rotation);
-        container.Inject(player.GetComponent<Player>());
+            NetworkServer.AddPlayerForConnection(conn, player);
+        }
+        else
+        {
+            var viewer = Instantiate(viewerPrefab);
+            NetworkServer.AddPlayerForConnection(conn, viewer);
+        }
 
-        NetworkServer.AddPlayerForConnection(conn, player);
         return true;
     }
 

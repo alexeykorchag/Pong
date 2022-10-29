@@ -51,13 +51,15 @@ public class Player : NetworkBehaviour
     [Client]
     private void FixedUpdate()
     {
-        _move.Update(Time.fixedDeltaTime);
+        if (_move != null)
+            _move.Update(Time.fixedDeltaTime);
     }
 
     [ClientRpc]
     private void SetDefaultPosition()
     {
-        _move.SetDefaultPosition();
+        if (_move != null)
+            _move.SetDefaultPosition();
     }
 
 }
