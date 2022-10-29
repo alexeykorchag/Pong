@@ -1,8 +1,12 @@
 using Mirror;
 using UnityEngine;
+using Zenject;
 
 public class Ball : NetworkBehaviour
 {
+    [Inject]
+    private GameController gameController;
+
     [SerializeField]
     private BallSettings settings;
 
@@ -15,9 +19,18 @@ public class Ball : NetworkBehaviour
 
         rigidbody2d.simulated = true;
 
-        SetDefaultPosition();
-        SetRandomVelocity();
+        gameController.GameStarted += OnGameStarted;
+        gameController.ResetPosition += OnGameStarted;
     }
+
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+       
+        gameController.GameStarted -= OnGameStarted;
+        gameController.ResetPosition -= OnGameStarted;
+    }
+
 
     [ServerCallback]
     private void OnCollisionEnter2D(Collision2D col)
@@ -25,11 +38,16 @@ public class Ball : NetworkBehaviour
         if (col.transform.TryGetComponent<Bounds>(out var bounds))
         {
             bounds.AddPoint(-col.transform.position.x);
-            SetDefaultPosition();
-            SetRandomVelocity();
         }
 
     }
+
+    private void OnGameStarted()
+    {
+        SetDefaultPosition();
+        SetRandomVelocity();
+    }
+   
 
     private void SetDefaultPosition()
     {
@@ -49,11 +67,4 @@ public class Ball : NetworkBehaviour
         return direction;
     }
 
-    private static Vector2 Rotate(Vector2 v, float delta)
-    {
-        return new Vector2(
-            v.x * Mathf.Cos(delta) - v.y * Mathf.Sin(delta),
-            v.x * Mathf.Sin(delta) + v.y * Mathf.Cos(delta)
-        );
-    }
 }

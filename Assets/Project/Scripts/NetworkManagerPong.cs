@@ -5,7 +5,13 @@ using Zenject;
 public class NetworkManagerPong : NetworkManager
 {
     [Inject]
+    private DiContainer container;
+    [Inject]
     private UIController uiController;
+    [Inject]
+    private GameController gameController;
+
+
 
     [SerializeField]
     private Transform leftRacketSpawn;
@@ -15,16 +21,19 @@ public class NetworkManagerPong : NetworkManager
 
     private GameObject _ball;
 
-    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
-    {
-        TryToSpawnPlayer(conn);
-        TryToSpawnBall(conn);
-    }
     public override void OnClientConnect()
     {
         base.OnClientConnect();
 
         uiController.OpenWindow<GameWindow>();
+    }
+
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        TryToSpawnPlayer(conn);
+        TryToSpawnBall(conn);
+
+        if (numPlayers == 2) gameController.StartNewGame();
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
@@ -37,12 +46,6 @@ public class NetworkManagerPong : NetworkManager
         base.OnServerDisconnect(conn);
     }
 
-    public override void OnServerReady(NetworkConnectionToClient conn)
-    {
-        Debug.Log($"NetworkRoomManager OnServerReady {conn}");
-        base.OnServerReady(conn);
-    }
-
     private bool TryToSpawnPlayer(NetworkConnectionToClient conn)
     {
         if (numPlayers >= 2) return false;
@@ -50,6 +53,7 @@ public class NetworkManagerPong : NetworkManager
         // add player at correct spawn position
         var start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
         var player = Instantiate(playerPrefab, start.position, start.rotation);
+        container.Inject(player.GetComponent<Player>());
 
         NetworkServer.AddPlayerForConnection(conn, player);
         return true;
@@ -60,6 +64,7 @@ public class NetworkManagerPong : NetworkManager
         if (numPlayers != 2) return false;
 
         _ball = Instantiate(spawnPrefabs.Find(prefab => prefab.name == "Ball"));
+        container.Inject(_ball.GetComponent<Ball>());
 
         NetworkServer.Spawn(_ball);
         return true;
